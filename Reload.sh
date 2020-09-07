@@ -1,4 +1,7 @@
 #! /bin/bash
+# Author: Brett Crapser
+# Version:1.0
+# License: GNU GPLV3
 
 if [ $# -eq 0 ]
 then
@@ -25,151 +28,11 @@ my_strip=0
 
 while getopts ":cd:" opt; do
   case $opt in
-    d) my_delay="$OPTARG"echo "Replicating Uploads directory structure to Watched directory"
-# this rebuilds the upload directory structure in the watched folder
-find . -type d -exec mkdir -p -- /home/pi/.octoprint/watched/{} \;
-
-echo "Done!"
-echo "Working on $from_dir"
-
-# gets all the directories under the current directory
-mapfile -t my_uploads < <(find . -type d)
-
-for (( i=0; i<${#my_uploads[@]}; i++ )); do
-  echo ${my_uploads[i]}
-  cd "${from_dir}/${my_uploads[i]}"
-  # get files in current directory
-  mapfile -t my_files < <(ls -p1 | grep -v /)
-  for (( j=0; j<${#my_files[@]}; j++ )); do
-    echo "${from_dir}/${my_uploads[i]}/${my_files[j]}"
-    if [ "$my_strip" -eq "0" ]; then
-      cp ${from_dir}/${my_uploads[i]}/${my_files[j]} /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original filesecho "Replicating Uploads directory structure to Watched directory"
-# this rebuilds the upload directory structure in the watched folder
-find . -type d -exec mkdir -p -- /home/pi/.octoprint/watched/{} \;
-
-echo "Done!"
-echo "Working on $from_dir"
-
-# gets all the directories under the current directory
-mapfile -t my_uploads < <(find . -type d)
-
-for (( i=0; i<${#my_uploads[@]}; i++ )); do
-  echo ${my_uploads[i]}
-  cd "${from_dir}/${my_uploads[i]}"
-  # get files in current directory
-  mapfile -t my_files < <(ls -p1 | grep -v /)
-  for (( j=0; j<${#my_files[@]}; j++ )); do
-    echo "${from_dir}/${my_uploads[i]}/${my_files[j]}"
-    if [ "$my_strip" -eq "0" ]; then
-      cp ${from_dir}/${my_uploads[i]}/${my_files[j]} /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original filesecho "Replicating Uploads directory structure to Watched directory"
-# this rebuilds the upload directory structure in the watched folder
-find . -type d -exec mkdir -p -- /home/pi/.octoprint/watched/{} \;
-
-echo "Done!"
-echo "Working on $from_dir"
-
-# gets all the directories under the current directory
-mapfile -t my_uploads < <(find . -type d)
-
-for (( i=0; i<${#my_uploads[@]}; i++ )); do
-  echo ${my_uploads[i]}
-  cd "${from_dir}/${my_uploads[i]}"
-  # get files in current directory
-  mapfile -t my_files < <(ls -p1 | grep -v /)
-  for (( j=0; j<${#my_files[@]}; j++ )); do
-    echo "${from_dir}/${my_uploads[i]}/${my_files[j]}"
-    if [ "$my_strip" -eq "0" ]; then
-      cp ${from_dir}/${my_uploads[i]}/${my_files[j]} /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    else
-      sed '/M117 INDICATOR-Layer/d' ${from_dir}/${my_uploads[i]}/${my_files[j]} > /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    fi
-    # echo `uptime`
-    sleep $my_delay
-  done
-
-done
-
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    else
-      sed '/M117 INDICATOR-Layer/d' ${from_dir}/${my_uploads[i]}/${my_files[j]} > /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    fi
-    # echo `uptime`
-    sleep $my_delay
-  done
-
-done
-
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    else
-      sed '/M117 INDICATOR-Layer/d' ${from_dir}/${my_uploads[i]}/${my_files[j]} > /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    fi
-    # echo `uptime`
-    sleep $my_delay
-  done
-
-done
-
+    d) my_delay="$OPTARG"
     ;;
     c) my_strip=1
     ;;
-    \?) echo "Invalid option -$OPTARG" >&2echo "Replicating Uploads directory structure to Watched directory"
-# this rebuilds the upload directory structure in the watched folder
-find . -type d -exec mkdir -p -- /home/pi/.octoprint/watched/{} \;
-
-echo "Done!"
-echo "Working on $from_dir"
-
-# gets all the directories under the current directory
-mapfile -t my_uploads < <(find . -type d)
-
-for (( i=0; i<${#my_uploads[@]}; i++ )); do
-  echo ${my_uploads[i]}
-  cd "${from_dir}/${my_uploads[i]}"
-  # get files in current directory
-  mapfile -t my_files < <(ls -p1 | grep -v /)
-  for (( j=0; j<${#my_files[@]}; j++ )); do
-    echo "${from_dir}/${my_uploads[i]}/${my_files[j]}"
-    if [ "$my_strip" -eq "0" ]; then
-      cp ${from_dir}/${my_uploads[i]}/${my_files[j]} /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    else
-      sed '/M117 INDICATOR-Layer/d' ${from_dir}/${my_uploads[i]}/${my_files[j]} > /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    fi
-    # echo `uptime`
-    sleep $my_delay
-  done
-
-done
-
+    \?) echo "Invalid option -$OPTARG" >&2
     ;;
   esac
 done
@@ -191,42 +54,7 @@ echo "Ready to Reload the files in 'uploads' to the 'watched' directory."
 if [ "$my_strip" -eq "0" ]; then
   echo "Leaving files as they are"
 else
-  echo "Stripping DLP mods"echo "Replicating Uploads directory structure to Watched directory"
-# this rebuilds the upload directory structure in the watched folder
-find . -type d -exec mkdir -p -- /home/pi/.octoprint/watched/{} \;
-
-echo "Done!"
-echo "Working on $from_dir"
-
-# gets all the directories under the current directory
-mapfile -t my_uploads < <(find . -type d)
-
-for (( i=0; i<${#my_uploads[@]}; i++ )); do
-  echo ${my_uploads[i]}
-  cd "${from_dir}/${my_uploads[i]}"
-  # get files in current directory
-  mapfile -t my_files < <(ls -p1 | grep -v /)
-  for (( j=0; j<${#my_files[@]}; j++ )); do
-    echo "${from_dir}/${my_uploads[i]}/${my_files[j]}"
-    if [ "$my_strip" -eq "0" ]; then
-      cp ${from_dir}/${my_uploads[i]}/${my_files[j]} /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    else
-      sed '/M117 INDICATOR-Layer/d' ${from_dir}/${my_uploads[i]}/${my_files[j]} > /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
-    fi
-    # echo `uptime`
-    sleep $my_delay
-  done
-
-done
-
+  echo "Stripping DLP mods"
 fi
 if [ "$my_delay" -eq "0" ]; then
   echo "No delay - may the RPi gods forgive you"
