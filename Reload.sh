@@ -14,7 +14,7 @@ then
   echo "Under Folders select the Watched Folder and use the default. use a big delay value and hit Ctrl-C after a second."
   echo ""
   echo "This script does not remove any files. Your old un-Reloaded files will remain. Reloaded files are"
-  echo "pre-pended with RDLP-filename. If you want to test it out, "
+  echo "pre-pended with RDLP-filename. If you want to test it out, just use a long delay and Ctrl-C out."
   echo ""
   echo "Notice: If there is no layer information in the original file, DLP will still not modify the file."
   echo "The 'delay' time is useful because ALL the plugins that scan incoming files will be activated when"
