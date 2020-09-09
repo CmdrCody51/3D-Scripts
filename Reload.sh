@@ -59,7 +59,7 @@ fi
 if [ "$my_delay" -eq "0" ]; then
   echo "No delay - may the RPi gods forgive you"
 else
-  echo "Delaying $my_delay between files"
+  echo "Delaying $my_delay seconds between files"
 fi
 echo ""
 
@@ -72,11 +72,11 @@ fi
 
 echo "Kool! Here we go!"
 
-cd uploads/
+cd ${from_dir}
 
 echo "Replicating Uploads directory structure to Watched directory"
 # this rebuilds the upload directory structure in the watched folder
-find . -type d -exec mkdir -p -- /home/pi/.octoprint/watched/{} \;
+find . -type d -exec mkdir -p -- ${to_dir}/{} \;
 
 echo "Done!"
 echo "Working on $from_dir"
@@ -87,25 +87,25 @@ mapfile -t my_uploads < <(find . -type d)
 for (( i=0; i<${#my_uploads[@]}; i++ )); do
   echo ${my_uploads[i]}
   cd "${from_dir}/${my_uploads[i]}"
+  echo ${PWD}
   # get files in current directory
-  mapfile -t my_files < <(ls -p1 | grep -v /)
+  mapfile -t my_files < <(find ${PWD} -maxdepth 1 -type f | grep -v '/\.'1 | grep -v 'metadata.json')
   for (( j=0; j<${#my_files[@]}; j++ )); do
-    echo "${from_dir}/${my_uploads[i]}/${my_files[j]}"
+    echo "Processing > " ${my_files[j]}
+    my_test=${my_files[j]/uploads/watched}
+    my_path="${my_test%/*} ${my_test##*/}"
+    my_test=${my_path/ /\/RDLP-}
+    echo "        To > " ${my_test}
     if [ "$my_strip" -eq "0" ]; then
-      cp ${from_dir}/${my_uploads[i]}/${my_files[j]} /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
+      cat "${my_files[j]}" > /tmp/RDLP
+      mv /tmp/RDLP "${my_test}"
     else
-      sed '/M117 INDICATOR-Layer/d' ${from_dir}/${my_uploads[i]}/${my_files[j]} > /tmp/RDLP
-# if you feel very safe you can comment out the next line and uncomment the next two to remove the original files
-      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/RDLP-${my_files[j]}
-#      rm ${from_dir}/${my_uploads[i]}/${my_files[j]}
-#      mv /tmp/RDLP ${to_dir}/${my_uploads[i]}/${my_files[j]}
+      sed '/M117 INDICATOR-Layer/d' "${my_files[j]}" > /tmp/RDLP
+      mv /tmp/RDLP "${my_test}"
     fi
-    # echo `uptime`
     sleep $my_delay
   done
+  unset my_files
+  unset your_files
 
 done
