@@ -1,0 +1,101 @@
+---
+A: ~
+B: ~
+C: ~
+D: ~
+E:
+  name: extruder
+  format: '%.5f'
+  signed: '1'
+  positive: '0'
+  strip: lt
+F:
+  name: feedrate
+  format: '%.5f'
+  strip: lt
+G:
+  name: interpolation
+  format: '%2u'
+  strip: l
+H: ~
+I: ~
+J: ~
+K: ~
+L: ~
+M:
+  name: miscellaneous
+  format: '%3u'
+  strip: l
+N:
+  name: linenumber
+  format: '%u'
+  strip: l
+O: ~
+P:
+  name: parameter
+  format: '%.3f'
+  strip: lt
+Q: ~
+R: ~
+S:
+  name: speed
+  format: '%3u'
+  strip: l
+T:
+  name: tool
+  format: '%2u'
+  strip: l
+U: ~
+V: ~
+W: ~
+X:
+  name: Xaxis
+  format: '%.5f'
+  signed: '1'
+  positive: '0'
+  strip: lt
+Y:
+  name: Yaxis
+  format: '%.5f'
+  signed: '1'
+  positive: '0'
+  strip: lt
+Z:
+  name: Zaxis
+  format: '%.5f'
+  signed: '1'
+  positive: '0'
+  strip: lt
+alphabet:
+  list: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  strip_spaces: '0'
+  drop_blank_lines: '1'
+  comment_char: ';'
+  keep_comments: '1'
+  repeat_comments: '0'
+  debug: '0'
+specials:
+  count: '4'
+sid0:
+  name: 'OCTO'
+  equal: 'M'
+sid1:
+  name: 'SNAP'
+  equal: ''
+sid2:
+  name: '@OCTOLAPSE'
+  equal: ''
+sid3:
+  name: 'LAYER'
+  equal: ''
+drops:
+  count: '3'
+did0:
+  string: "M82 ; use absolute distances for extrusion"
+  equal: '1'
+did1:
+  string: "G21 ; set units to millimeters"
+  equal: '1'
+did2:
+  string: "G90 ; use absolute coordinates"
+  equal: '1'
